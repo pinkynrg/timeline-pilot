@@ -2,6 +2,9 @@
 
 **timeline-pilot** is an interactive web application that allows you to visualize and analyze your Google Timeline data, downloaded through Google Takeout. The application integrates various technologies to provide a rich user experience, enabling you to explore your location history on a map and interact with the data using natural language queries.
 
+![screen-1](https://github.com/pinkynrg/timeline-pilot/blob/main/screen-1.png)
+![screen-2](https://github.com/pinkynrg/timeline-pilot/blob/main/screen-2.png)
+
 ## Features
 
 - **Leaflet for Maps**: Visualize your location data on an interactive map. Leaflet is used to plot all the points from your Google Timeline, giving you a clear view of where you've been.
@@ -36,6 +39,11 @@ make start
 ```
 
 ## Usage
+
 - Upload your Google Timeline data through the provided interface.
 - Use the map to explore your locations.
 - Ask questions to Gemini AI to filter or highlight specific data points.
+
+## Licence
+
+This project is licensed under the MIT License. See the LICENSE file for details.
