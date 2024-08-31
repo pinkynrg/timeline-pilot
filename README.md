@@ -3,9 +3,10 @@
 
 # ➤ timeline-pilot
 
-**timeline-pilot** is an interactive web application that allows you to visualize and analyze your Google Timeline data, downloaded through Google Takeout. The application integrates various technologies to provide a rich user experience, enabling you to explore your location history on a map and interact with the data using natural language queries.
+**timeline-pilot** is an interactive web application that allows you to visualize and analyze your Google Timeline data, downloaded through Google Takeout.
 
 ![screen-1](https://github.com/pinkynrg/timeline-pilot/blob/main/screen-1.png)
+s
 ![screen-2](https://github.com/pinkynrg/timeline-pilot/blob/main/screen-2.png)
 
 
