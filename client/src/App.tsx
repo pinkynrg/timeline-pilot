@@ -6,37 +6,49 @@ import { Chat } from './components/Chat/Chat'
 import { Map } from './components/Map/Map'
 import 'leaflet/dist/leaflet.css'
 
-interface Point {
-    coordinates: {
-      lat: number,
-      lon: number
-    },
-    timestamp: string
+interface PointFromServer {
+  coordinates: {
+    id: number,
+    lat: number,
+    lon: number
+  },
+  timestamp: string
 }
+
+const pointZeroZero: ComponentProps<typeof Map>['position'] = { latitude: 0, longitude: 0, altitude: 2.5 }
 
 const App = () => {
   const [messages, setMessages] = useState<ComponentProps<typeof Chat>['messages']>([])
+  const [position, setPosition] = useState<ComponentProps<typeof Map>['position']>(pointZeroZero)
   const [data, setData] = useState<ComponentProps<typeof Map>['points']>([])
-  const [path, setPath] = useState<ComponentProps<typeof Map>['points']>([])
+  const [path, setPath] = useState<ComponentProps<typeof Map>['path']>([])
+
+  useEffect(() => {
+    if (path.length > 0) {
+      setPosition({ ...path[0], altitude: 2.5 })
+    } else if (data.length > 0) {
+      setPosition({ ...data[0], altitude: 2.5 })
+    }
+  }, [path, data])
 
   const responseToData = (
-    result: AxiosResponse<Point[], unknown>,
-  ): [number, number][] => result.data.map((e) => ([e.coordinates.lat, e.coordinates.lon]))
+    result: AxiosResponse<PointFromServer[], unknown>,
+  ) => result.data.map((e) => ({
+    id: e.coordinates.id,
+    latitude: e.coordinates.lat,
+    longitude: e.coordinates.lon,
+  }))
 
   const fetchData = useCallback(async () => {
     if (data.length > 0) return
-    const result = await axios.get<Point[]>('/api/points')
+    const result = await axios.get<PointFromServer[]>('/api/points')
     setData(responseToData(result))
   }, [data.length])
 
   const handleDateClick = useCallback(async (timestamp: string) => {
-    const result = await axios.get<Point[]>(`/api/points?timestamp=${timestamp}`)
+    const result = await axios.get<PointFromServer[]>(`/api/points?timestamp=${timestamp}`)
     setPath(responseToData(result))
   }, [])
-
-  useEffect(() => {
-    console.log(messages)
-  }, [messages])
 
   const onRequest = useCallback(async (msg: string) => {
     try {
@@ -55,7 +67,6 @@ const App = () => {
             id: new Date().toISOString(),
             text: e.format('LL'),
             callback: () => handleDateClick(e.format('YYYY-MM-DD HH:mm:ss')),
-
           }
         ))])
     } catch (err) {
@@ -94,6 +105,8 @@ const App = () => {
         onRequest={onRequest}
       />
       <Map
+        positionChange={setPosition}
+        position={position}
         points={data}
         path={path}
       />

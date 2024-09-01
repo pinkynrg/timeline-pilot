@@ -100,6 +100,7 @@ def ask():
             {
                 "timestamp": location.timestamp.isoformat(),
                 "coordinates": {
+                    "id": location.id,
                     "lat": to_shape(location.coordinates).y,  # Extract latitude
                     "lon": to_shape(location.coordinates).x   # Extract longitude
                 }
@@ -136,6 +137,7 @@ def points():
                 {
                     "timestamp": location.timestamp.isoformat(),
                     "coordinates": {
+                        "id": location.id,
                         "lat": to_shape(location.coordinates).y,  # Extract latitude
                         "lon": to_shape(location.coordinates).x   # Extract longitude
                     }
@@ -170,6 +172,7 @@ def points():
                     grouped_locations[date_key] = {
                         "timestamp": location.timestamp.isoformat(),
                         "coordinates": {
+                            "id": location.id,
                             "lat": point.y,  # Extract latitude
                             "lon": point.x   # Extract longitude
                         }
